@@ -4,10 +4,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-
-const DashboardPage = () => {
-  return <h1>Dashboard funcionando 🚀</h1>;
-};
+import DashboardPage from './pages/DashboardPage';
 
 function App() {
   return (

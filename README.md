@@ -1,6 +1,7 @@
 # Sistema de Autenticação Fullstack
 
 Este projeto é uma aplicação fullstack com autenticação de usuários, desenvolvida com foco em aprendizado prático de desenvolvimento web moderno.
+![Imagem do sistema rodando](./imagens/Captura_de_tela_telainicial.png)
 
 ## Tecnologias utilizadas
 
@@ -50,8 +51,9 @@ npm run dev
 ---
 
 ## Próximos passos:
+- [x] Melhorar o sistema de cadastro/login
 - [x] Dashboard com dados reais
-- [x] Melhorias de UI/UX
+- [x] Aplicar a IA para fazer a busca por produtos 
 - [x] Deploy (Render/Vercel)
 - [x] Testes automatizados
 

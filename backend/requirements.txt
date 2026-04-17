@@ -3,5 +3,6 @@ uvicorn
 motor
 pydantic
 bcrypt
-pyjwt
-dotenv
+PyJWT
+python-dotenv
+email-validator

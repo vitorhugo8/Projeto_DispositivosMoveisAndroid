@@ -18,18 +18,11 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const checkAuth = async () => {
-    try {
-      const { data } = await axios.get(`${API_URL}/api/auth/me`, {
-        withCredentials: true
-      });
-      setUser(data);
-    } catch {
-      setUser(false);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // MUDANÇA TEMPORÁRIA AQUI 
+const checkAuth = async () => {
+  setUser({ name: "Usuário Teste" }); // força login
+  setLoading(false);
+};
 
   useEffect(() => {
     checkAuth();
