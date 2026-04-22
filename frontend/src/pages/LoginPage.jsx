@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -7,14 +8,19 @@ export default function LoginPage() {
   const [error, setError] = useState('');
 
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setError(''); 
+
     const result = await login(email, password);
 
-    if (!result.success) {
-      setError(result.error);
+    if (result.success) {
+      navigate('/dashboard'); 
+    } else {
+      setError(result.error); 
     }
   };
 
@@ -40,19 +46,17 @@ export default function LoginPage() {
         }}
       >
         <h2 style={{ textAlign: 'center' }}>Login</h2>
-
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && (
+          <p style={{ color: 'red', textAlign: 'center' }}>
+            {error}
+          </p>
+        )}
 
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          style={{
-            padding: '10px',
-            borderRadius: '5px',
-            border: 'none'
-          }}
         />
 
         <input
@@ -60,26 +64,25 @@ export default function LoginPage() {
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{
-            padding: '10px',
-            borderRadius: '5px',
-            border: 'none'
-          }}
         />
 
         <button
           type="submit"
           style={{
-            padding: '10px',
-            borderRadius: '5px',
-            border: 'none',
             background: '#f97316',
             color: '#fff',
+            padding: '10px',
+            border: 'none',
+            borderRadius: '5px',
             cursor: 'pointer'
           }}
         >
           Entrar
         </button>
+
+        <p style={{ textAlign: 'center' }}>
+          Não tem conta? <Link to="/register">Cadastre-se</Link>
+        </p>
       </form>
     </div>
   );

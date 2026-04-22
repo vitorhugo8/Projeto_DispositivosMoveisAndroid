@@ -48,10 +48,10 @@ def create_token(data: dict):
     return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
 
 def hash_password(password: str):
-    return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
-def verify_password(password: str, hashed: bytes):
-    return bcrypt.checkpw(password.encode(), hashed)
+def verify_password(password: str, hashed: str):
+    return bcrypt.checkpw(password.encode(), hashed.encode())
 
 # =========================
 # ROTAS
@@ -71,36 +71,26 @@ async def api_root():
 # REGISTER
 # =========================
 @api_router.post("/auth/register")
-async def register(user: UserRegister, response: Response):
+async def register(user: UserRegister):
+    existing = await db.users.find_one({"email": user.email})
 
-    existing_user = await db.users.find_one({"email": user.email})
-    if existing_user:
-        raise HTTPException(status_code=400, detail="Usuário já existe")
+    if existing:
+        raise HTTPException(status_code=400, detail="Email já cadastrado")
 
     hashed = hash_password(user.password)
 
     new_user = {
-        "email": user.email,
         "name": user.name,
-        "password": hashed,
-        "created_at": datetime.utcnow()
+        "email": user.email,
+        "password": hashed
     }
 
     await db.users.insert_one(new_user)
 
-    token = create_token({"email": user.email})
-
-    response.set_cookie(
-        key="access_token",
-        value=token,
-        httponly=True
-    )
-
     return {
-        "email": user.email,
-        "name": user.name
+        "name": user.name,
+        "email": user.email
     }
-
 
 # =========================
 # LOGIN
@@ -180,7 +170,7 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173"],  # frontend
     allow_methods=["*"],
     allow_headers=["*"],
 )
