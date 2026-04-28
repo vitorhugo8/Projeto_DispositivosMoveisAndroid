@@ -1,31 +1,60 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+const API_URL = "http://localhost:8000";
+
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  // FORÇANDO USUÁRIO LOGADO
-  useEffect(() => {
-    const fakeUser = {
-      name: "Usuário Teste",
-      email: "teste@email.com"
-    };
+  // Login
+  const login = async (email, password) => {
+    try {
+      const { data } = await axios.post(
+        `${API_URL}/api/auth/login`,
+        { email, password },
+        { withCredentials: true }
+      );
 
-    setUser(fakeUser);
-    setLoading(false);
-  }, []);
+      setUser(data);
 
-  const login = async () => ({ success: true });
-  const register = async () => ({ success: true });
-  const logout = async () => setUser(null);
+      return { success: true };
+
+    } catch (error) {
+      return {
+        success: false,
+        error: error.response?.data?.detail || "Erro no login"
+      };
+    }
+  };
+
+  // Register 
+  const register = async (name, email, password) => {
+    try {
+      const { data } = await axios.post(
+        `${API_URL}/api/auth/register`,
+        { name, email, password },
+        { withCredentials: true }
+      );
+
+      setUser(data);
+
+      return { success: true };
+
+    } catch (error) {
+      return {
+        success: false,
+        error: error.response?.data?.detail || "Erro no cadastro"
+      };
+    }
+  };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 export const useAuth = () => useContext(AuthContext);

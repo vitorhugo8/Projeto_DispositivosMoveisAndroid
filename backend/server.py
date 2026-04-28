@@ -170,7 +170,7 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=["http://localhost:5173"],  # frontend
+    allow_origins=["http://localhost:5173"],  # obrigatório para os cookies funcionarem
     allow_methods=["*"],
     allow_headers=["*"],
 )

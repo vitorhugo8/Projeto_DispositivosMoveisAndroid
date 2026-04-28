@@ -1,61 +1,53 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 
-const DashboardPage = () => {
+export default function DashboardPage() {
   const { user, logout } = useAuth();
 
   return (
-    <div style={{ padding: "20px" }}>
-  
+    <div className="dashboard">
       <div className="header">
-        <h1>Deal Detector</h1>
+        <h1 className="logo">
+          <span className="icon">🛒</span>
+          Deal Detector
+        </h1>
 
-        <div>
-          <span style={{ marginRight: "10px" }}>
-            Olá, {user?.email || "Usuário"}
-          </span>
-          <button className="secondary" onClick={logout}>
-            Sair
-          </button>
+        <div className="user-area">
+          <span>Olá, {user?.name || "Usuário"}</span>
+          <button onClick={logout}>Sair</button>
         </div>
       </div>
 
-      <div className="menu">
-        <button className="primary">Buscar</button>
-        <button className="secondary">Histórico</button>
-        <button className="secondary">Sugestões</button>
+      <div className="tabs">
+        <button className="active">Buscar</button>
+        <button>Histórico</button>
+        <button>Sugestões</button>
       </div>
 
-    
-      <div className="dashboard-grid">
-        
+      <div className="content">
 
-        <div className="card" style={{ flex: 1, minWidth: "300px" }}>
+        <div className="card">
           <h2>Upload de Imagem</h2>
 
           <div className="upload-box">
-            <p>📤</p>
             <p>Arraste uma imagem ou clique para enviar</p>
-            <small>PNG, JPG até 10MB</small>
+            <span>PNG, JPG até 10MB</span>
           </div>
         </div>
 
-      
-        <div className="card" style={{ flex: 1, minWidth: "300px" }}>
+        <div className="card">
           <h2>Link do Produto</h2>
 
           <input
             type="text"
             placeholder="Cole o link aqui..."
+            className="input"
           />
 
-          <div style={{ marginTop: "10px" }}>
-            <button className="primary">Buscar</button>
-          </div>
+          <button className="primary">Buscar</button>
         </div>
+
       </div>
     </div>
   );
-};
-
-export default DashboardPage;
+}

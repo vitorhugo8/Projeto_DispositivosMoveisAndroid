@@ -1,7 +1,7 @@
 # Sistema de Autenticação Fullstack
 
 Este projeto é uma aplicação fullstack com autenticação de usuários, desenvolvida com foco em aprendizado prático de desenvolvimento web moderno.
-![Imagem do sistema rodando](./imagens/Captura_de_tela_telainicial.png)
+![Imagem do sistema rodando](./imagens/tela_inicial.png)
 
 ## Tecnologias utilizadas
 
@@ -48,14 +48,19 @@ python -m uvicorn server:app --reload
 cd frontend
 npm install
 npm run dev
+
+### 4. MongoDB
+Ligar o Mongo DB:
+sudo systemctl start mongod 
+
+Desligar o Mongo DB: 
+sudo systemctl stop mongod
 ---
 
 ## Próximos passos:
-- [x] Melhorar o sistema de cadastro/login
 - [x] Dashboard com dados reais
 - [x] Aplicar a IA para fazer a busca por produtos 
 - [x] Deploy (Render/Vercel)
-- [x] Testes automatizados
 
 ---
 
