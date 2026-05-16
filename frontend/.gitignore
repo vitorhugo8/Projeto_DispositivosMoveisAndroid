@@ -1,19 +1,7 @@
-# Ambiente virtual
-.venv/
-
-# Python
-__pycache__/
-*.pyc
-
-# Variáveis de ambiente
 .env
 backend/.env
-
-# Node modules
 node_modules/
-
-# VSCode
-.vscode/
-
-# Logs
-*.log
+frontend/node_modules/
+.venv/
+__pycache__/
+*.pyc
