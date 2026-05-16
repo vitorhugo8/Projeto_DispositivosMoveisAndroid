@@ -84,7 +84,14 @@ export default function DashboardPage() {
       {result && (
         <div className="result-box">
           <h3>Resultado</h3>
-          <p>{result}</p>
+        <div>
+          <p><strong>Produto:</strong> {result.produto}</p>
+          <p><strong>Categoria:</strong> {result.categoria}</p>
+          <p><strong>Preço:</strong> R$ {result.preco}</p>
+          <p><strong>Recomendação:</strong> {result.recomendacao}</p>
+          <p><strong>Risco:</strong> {result.risco}</p>
+          <p><strong>Confiança:</strong> {result.confianca}%</p>
+        </div>
         </div>
       )}
     </div>

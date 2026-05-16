@@ -1,24 +1,25 @@
-import { useEffect } from "react";
-import API from "../services/api";
+{result && (
+  <div className="resultado">
+    <h2>{result.produto}</h2>
 
-export default function Home() {
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await API.get("/");
-        console.log(response.data);
-      } catch (error) {
-        console.error("Erro ao conectar com backend:", error);
-      }
-    };
+    <p>
+      <strong>Categoria:</strong> {result.categoria}
+    </p>
 
-    fetchData();
-  }, []);
+    <p>
+      <strong>Preço:</strong> R$ {result.preco}
+    </p>
 
-  return (
-    <div>
-      <h1>Minha aplicação</h1>
-      <p>Conectando com FastAPI...</p>
-    </div>
-  );
-}
+    <p>
+      <strong>Recomendação:</strong> {result.recomendacao}
+    </p>
+
+    <p>
+      <strong>Risco:</strong> {result.risco}
+    </p>
+
+    <p>
+      <strong>Confiança:</strong> {result.confianca}%
+    </p>
+  </div>
+)}

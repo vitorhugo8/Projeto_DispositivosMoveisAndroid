@@ -30,7 +30,7 @@ export default function PriceFinder() {
       {result && (
         <div className="result">
           <h3>{result.name}</h3>
-          <p>{result.price}</p>
+          <p>{result.preco}</p>
           <a href={result.link} target="_blank" rel="noreferrer">
             Ver oferta
           </a>
