@@ -1,26 +1,26 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
-import Login from "./pages/LoginPage";
-import Register from "./pages/RegisterPage";
-import Dashboard from "./pages/DashboardPage";
-
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import Home from "./pages/Home";
 
 function PrivateRoute({ children }) {
   const { user } = useAuth();
+
   return user ? children : <Navigate to="/login" />;
 }
 
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
 
       <Route
         path="/"
         element={
           <PrivateRoute>
-            <Dashboard />
+            <Home />
           </PrivateRoute>
         }
       />
