@@ -42,15 +42,11 @@ async def analyze_image(file: UploadFile = File(...)):
 @router.post("/analyze-link")
 async def analyze_link(data: dict):
 
-    link = data.get("link")
+    link = data.get("url")
+    print("Link:", link)
 
     product_data = extract_product_data(link)
 
-    result = await analyze_product(
-        product_data["title"],
-        product_data["price"]
-    )
-
     return {
-        "result": result
+        "result": product_data
     }

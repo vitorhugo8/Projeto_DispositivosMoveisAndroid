@@ -1,103 +1,103 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Navbar() {
+  const { user, logout } = useAuth();
+
   return (
     <nav
       style={{
-        width: "100%",
-        padding: "22px 60px",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "#ffffff",
+        padding: "24px 48px",
+        backgroundColor: "white",
         borderBottom: "1px solid #f3f4f6",
-        position: "sticky",
-        top: 0,
-        zIndex: 1000,
-        boxSizing: "border-box",
       }}
     >
-      {/* LOGO */}
-      <Link
-        to="/"
+      <h1
         style={{
-          textDecoration: "none",
+          fontSize: "36px",
+          color: "#ff7a00",
+          fontWeight: "bold",
         }}
       >
-        <h1
+        DealDetector
+      </h1>
+
+      {user ? (
+        <div
           style={{
-            fontSize: "32px",
-            fontWeight: "800",
-            color: "#ff7a00",
-            margin: 0,
-            letterSpacing: "-1px",
+            display: "flex",
+            alignItems: "center",
+            gap: "18px",
           }}
         >
-          DealDetector
-        </h1>
-      </Link>
-
-      {/* BOTÕES */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "16px",
-        }}
-      >
-        {/* LOGIN */}
-        <Link to="/login">
-          <button
+          <span
             style={{
-              padding: "12px 22px",
-              borderRadius: "14px",
-              border: "1px solid #d1d5db",
-              backgroundColor: "#ffffff",
-              color: "#111827",
-              fontSize: "15px",
               fontWeight: "600",
-              cursor: "pointer",
-              transition: "0.3s",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "#f9fafb";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#ffffff";
+              color: "#374151",
             }}
           >
-            Entrar
-          </button>
-        </Link>
+            Olá, {user.name}
+          </span>
 
-        {/* REGISTER */}
-        <Link to="/register">
           <button
+            onClick={logout}
             style={{
-              padding: "12px 22px",
-              borderRadius: "14px",
-              border: "none",
               backgroundColor: "#ff7a00",
-              color: "#ffffff",
-              fontSize: "15px",
-              fontWeight: "700",
+              color: "white",
+              border: "none",
+              padding: "12px 18px",
+              borderRadius: "12px",
               cursor: "pointer",
-              transition: "0.3s",
-              boxShadow: "0 6px 18px rgba(255,122,0,0.25)",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "#e96f00";
-              e.target.style.transform = "translateY(-2px)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#ff7a00";
-              e.target.style.transform = "translateY(0px)";
+              fontWeight: "bold",
             }}
           >
-            Criar conta
+            Sair
           </button>
-        </Link>
-      </div>
+        </div>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            gap: "16px",
+          }}
+        >
+          <Link to="/login">
+            <button
+              style={{
+                padding: "12px 22px",
+                borderRadius: "14px",
+                border: "1px solid #d1d5db",
+                backgroundColor: "white",
+                cursor: "pointer",
+                fontWeight: "bold",
+              }}
+            >
+              Entrar
+            </button>
+          </Link>
+
+          <Link to="/register">
+            <button
+              style={{
+                padding: "12px 22px",
+                borderRadius: "14px",
+                border: "none",
+                backgroundColor: "#ff7a00",
+                color: "white",
+                cursor: "pointer",
+                fontWeight: "bold",
+                boxShadow:
+                  "0 10px 25px rgba(255,122,0,0.25)",
+              }}
+            >
+              Criar conta
+            </button>
+          </Link>
+        </div>
+      )}
     </nav>
   );
 }

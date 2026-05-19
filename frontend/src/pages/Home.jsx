@@ -1,7 +1,38 @@
+import { useState } from "react";
+import axios from "axios";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export default function Home() {
+const [url, setUrl] = useState("");
+const [result, setResult] = useState(null);
+const [loading, setLoading] = useState(false);
+
+async function handleAnalyze() {
+  if (!url) return;
+
+  try {
+    setLoading(true);
+
+    const response = await axios.post(
+      "http://localhost:8000/api/ai/analyze-link",
+      {
+        url: url,
+      }
+    );
+
+    console.log(response.data);
+
+    setResult(response.data.result);
+
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+}
+
   const styles = {
     page: {
       minHeight: "100vh",
@@ -161,19 +192,21 @@ export default function Home() {
   };
 
   return (
-    <div style={styles.page}>
-      <Navbar />
+  <div style={styles.page}>
+    <Navbar />
 
-      <div
-  style={{
-    marginTop: "40px",
-    backgroundColor: "white",
-    padding: "24px",
-    borderRadius: "24px",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
-    border: "1px solid #f3f4f6",
+  {/* ANALISADOR */}
+  <div
+    style={{
+      marginTop: "40px",
+      backgroundColor: "white",
+      padding: "24px",
+      borderRadius: "24px",
+      boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
+      border: "1px solid #f3f4f6",
   }}
->
+  >
+
   <h3
     style={{
       fontSize: "22px",
@@ -188,13 +221,17 @@ export default function Home() {
     style={{
       display: "flex",
       gap: "14px",
+      flexWrap: "wrap",
     }}
   >
     <input
       type="text"
+      value={url}
+      onChange={(e) => setUrl(e.target.value)}
       placeholder="Cole aqui o link do produto..."
       style={{
         flex: 1,
+        minWidth: "250px",
         padding: "18px",
         borderRadius: "14px",
         border: "1px solid #d1d5db",
@@ -204,6 +241,8 @@ export default function Home() {
     />
 
     <button
+      onClick={handleAnalyze}
+      disabled={loading}
       style={{
         backgroundColor: "#ff7a00",
         color: "white",
@@ -214,10 +253,11 @@ export default function Home() {
         cursor: "pointer",
       }}
     >
-      Analisar
+      {loading ? "Analisando..." : "Analisar"}
     </button>
-  </div>
+    </div>
 </div>
+
 
       {/* HERO SECTION */}
       <section style={styles.hero}>
@@ -245,7 +285,7 @@ export default function Home() {
         <div style={styles.heroRight}>
           <div style={styles.analysisCard}>
             <h2 style={styles.cardTitle}>
-              Resultado da análise
+              {result ? "Resultado da análise" : "Aguardando análise"}
             </h2>
 
             <p style={styles.cardSubtitle}>
@@ -257,8 +297,9 @@ export default function Home() {
                 <div style={styles.infoTitle}>
                   Produto detectado
                 </div>
-
-                <p>Controle PS4 Bluetooth</p>
+                  <p>
+                    {result?.title}
+                  </p>
               </div>
 
               <div style={styles.infoBox}>
@@ -266,7 +307,9 @@ export default function Home() {
                   Nível de confiança
                 </div>
 
-                <p>92% confiável</p>
+                <p>
+                {result?.confianca}
+                </p>
               </div>
 
               <div style={styles.infoBox}>
